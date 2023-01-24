@@ -1,16 +1,3 @@
-import {
-  GraphQLInt,
-  GraphQLScalarType,
-  GraphQLFloat,
-  GraphQLBoolean,
-  GraphQLString,
-  GraphQLList,
-} from "graphql";
-
-const GraphQLDate = new GraphQLScalarType({
-  name: "GraphQLDate",
-});
-
 export const postgresToGraphql = {
   _bool: "GraphQLList(GraphQLBoolean)",
   _float4: "GraphQLList(GraphQLFloat)",
