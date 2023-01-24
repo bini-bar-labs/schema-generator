@@ -13,6 +13,7 @@ export const postgresToGraphql = {
   text: "GraphQLString",
   timestamp: "GraphQLDate",
   timestamptz: "GraphQLDate",
+  varchar: "GraphQLString",
 } as const;
 
 export const postgresToTS = {
@@ -30,4 +31,5 @@ export const postgresToTS = {
   text: "string",
   timestamp: "Date",
   timestamptz: "Date",
+  varchar: "string",
 } as const;
