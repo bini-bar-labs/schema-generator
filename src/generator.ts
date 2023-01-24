@@ -1,5 +1,4 @@
 import { writeFileSync } from "fs";
-import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import path from "path";
 import postgres from "postgres";
 import { formatColumnsFields } from "./fields/columns";
