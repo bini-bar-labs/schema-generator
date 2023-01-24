@@ -115,7 +115,7 @@ import {
 const GraphQLDate = new GraphQLScalarType({
   name: "GraphQLDate",
 });
-import "join-monster";
+import joinMonster from "join-monster";
 ${schemas.join("\n")}
   `.trim()
   );

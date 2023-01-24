@@ -2,15 +2,16 @@
   "name": "@join-monster-graph-generate/schema-generator",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/cli.js",
+  "types": "dist/cli.d.ts",
+  "bin": "join-monster-generate",
   "scripts": {
-    "tsc": "tsc",
     "watch": "tsc --watch",
-    "dev": "tsc && node dist/index"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "commander": "^10.0.0",
     "graphql": "^15.4.0",
