@@ -10,8 +10,8 @@ join-monster-generator comes to solves this issue. By reading your database sche
 
 ### install
 
-`npm i --save @bini-bar-labs/join-monster-generator`
-`pnpm add @bini-bar-labs/join-monster-generator`
+- `npm i --save @bini-bar-labs/join-monster-generator`
+- `pnpm add @bini-bar-labs/join-monster-generator`
 
 ### Basic Usage
 
