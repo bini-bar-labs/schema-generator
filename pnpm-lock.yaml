@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/node': ^18.11.18
+  '@types/prettier': ^2.7.2
   commander: ^10.0.0
   postgres: ^3.3.3
   prettier: ^2.8.3
@@ -15,6 +16,7 @@ dependencies:
 
 devDependencies:
   '@types/node': 18.11.18
+  '@types/prettier': 2.7.2
   prettier: 2.8.3
   ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
 
@@ -61,6 +63,10 @@ packages:
 
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
+    dev: true
+
+  /@types/prettier/2.7.2:
+    resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
     dev: true
 
   /acorn-walk/8.2.0:

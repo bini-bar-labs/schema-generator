@@ -8,6 +8,7 @@ import { getQueryField } from "./queryFields";
 import { ColumnData, ParseConfig, ReferenceData } from "./types";
 import { snakeToPascal } from "./utils";
 import { formatWhereCondition } from "./whereCondition";
+import prettier from "prettier";
 
 const SCHEMA_DEFINITION_TEMPLATE = `export const __SCHEMA_NAME__: GraphQLObjectType = new GraphQLObjectType({
   name: "__SCHEMA_NAME__",
@@ -99,24 +100,29 @@ export async function generateSchemas(
 
   writeFileSync(
     path.resolve(outFile),
-    `
-import {
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLID,
-  GraphQLScalarType,
-  GraphQLFloat,
-  GraphQLBoolean
-} from "graphql";
-const GraphQLDate = new GraphQLScalarType({
-  name: "GraphQLDate",
-});
-import joinMonster from "join-monster";
-${schemas.join("\n")}
-  `.trim()
+    prettier.format(
+      `
+      import {
+        GraphQLObjectType,
+        GraphQLNonNull,
+        GraphQLInt,
+        GraphQLString,
+        GraphQLList,
+        GraphQLID,
+        GraphQLScalarType,
+        GraphQLFloat,
+        GraphQLBoolean
+      } from "graphql";
+      const GraphQLDate = new GraphQLScalarType({
+        name: "GraphQLDate",
+      });
+      import joinMonster from "join-monster";
+      ${schemas.join("\n")}
+    `,
+      {
+        parser: "typescript",
+      }
+    )
   );
 }
 
