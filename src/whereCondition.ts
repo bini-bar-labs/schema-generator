@@ -32,10 +32,10 @@ function formatNonArrayColumn(table: string, column: ColumnData): string {
     THEN TRUE
     ELSE
       CASE WHEN \${(args.${columnArgName}) === null}
-      THEN ${table}."${column.column_name}" IS NULL
+      THEN "${table}"."${column.column_name}" IS NULL
       ELSE
         CASE WHEN \${(args.${columnArgName} ?? []).length > 0}
-        THEN ${table}."${column.column_name}" = ANY (ARRAY[\${args.${columnArgName} ?? []}]::${column.data_type}[])
+        THEN "${table}"."${column.column_name}" = ANY (ARRAY[\${args.${columnArgName} ?? []}]::${column.data_type}[])
         ELSE TRUE
       END
     END
@@ -49,7 +49,7 @@ function formatArrayColumn(table: string, column: ColumnData): string {
   const TSType = postgresToTS[column.udt_name];
   return `
     CASE WHEN \${args.${columnArgName} !== undefined && Array.isArray(args.${columnArgName})}
-      THEN ${table}."${columnName}" && ARRAY[\${(args.${columnArgName} ?? []).map((x: ${TSType}[number]) => "'" + x + "'")}]::${column.data_type}[]
+      THEN "${table}"."${columnName}" && ARRAY[\${(args.${columnArgName} ?? []).map((x: ${TSType}[number]) => "'" + x + "'")}]::${column.data_type}[]
       ELSE TRUE
     END
 `;
