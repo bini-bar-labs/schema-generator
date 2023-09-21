@@ -45,10 +45,8 @@ export async function generateSchemas(
   config: ParseConfig
 ) {
   const tableColumnsMap = await getTablesColumnsMap(sql, config);
-  const {
-    tableReferencesMap,
-    tableForeigReferencesMap,
-  } = await getColumnsReferencesMaps(sql);
+  const { tableReferencesMap, tableForeigReferencesMap } =
+    await getColumnsReferencesMaps(sql);
 
   const schemas: string[] = [];
   for (const [table, columns] of tableColumnsMap) {
@@ -63,9 +61,8 @@ export async function generateSchemas(
 
     const columnField = formatColumnsFields(columns);
     const referenceField = formatReferenceFields(references, columns);
-    const foreignReferenceField = formatForeignReferenceFields(
-      foreignReferences
-    );
+    const foreignReferenceField =
+      formatForeignReferenceFields(foreignReferences);
 
     const schemaDefinition = SCHEMA_DEFINITION_TEMPLATE.replace(
       /__SCHEMA_NAME__/g,
@@ -246,7 +243,7 @@ function getGraphQLTypeFromColumn(
 function arrayPostgresType(column: ColumnData) {
   switch (column.udt_name) {
     case "_text":
-      return "GraphQLList(GraphQLNonNull(GraphQLString))";
+      return "new GraphQLList(new GraphQLNonNull(GraphQLString))";
     default:
       throw new Error(
         `Unhandled array type: ${column.udt_name}, column: ${JSON.stringify(

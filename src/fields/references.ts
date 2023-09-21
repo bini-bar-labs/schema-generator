@@ -18,7 +18,7 @@ export function formatReferenceFields(
     const foreignTableName = snakeToPascal(reference.foreign_table_name);
     const foreignTableEntityName = referenceColumn.is_nullable
       ? foreignTableName
-      : `GraphQLNonNull(${foreignTableName})`;
+      : `new GraphQLNonNull(${foreignTableName})`;
     data.push(`
       ${fieldName}: {
         type: ${foreignTableEntityName},

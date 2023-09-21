@@ -8,7 +8,7 @@ export function formatColumnsFields(columns: ColumnData[]): string {
     const fieldName = snakeToCamel(column.column_name);
     const baseGraphqlType = postgresToGraphql[column.udt_name];
     const graphqlType = !column.is_nullable
-      ? `GraphQLNonNull(${baseGraphqlType})`
+      ? `new GraphQLNonNull(${baseGraphqlType})`
       : baseGraphqlType;
     data.push(`${fieldName}: {
       type: ${graphqlType},

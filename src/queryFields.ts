@@ -14,7 +14,7 @@ export function getQueryField(
     const nonArrayFields = columns.filter((x) => x.data_type !== "ARRAY");
     data.push(`
     ${filedName}s: {
-      type: GraphQLNonNull(GraphQLList(GraphQLNonNull(${fieldEntityName}))),
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(${fieldEntityName}))),
       args: {
         ${nonArrayFields.map(
           (column) => `
