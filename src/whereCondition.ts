@@ -15,11 +15,12 @@ export function formatWhereCondition(
       nonArrayColumns.push(column);
     }
   }
+
   return [
     nonArrayColumns
       .map((col) => formatNonArrayColumn(table, col))
       .join("\nAND\n"),
-    "\nAND\n",
+    arrayColumns.length > 0 ? "\nAND\n" : "\n",
     arrayColumns.map((col) => formatArrayColumn(table, col)).join("\n"),
   ].join("");
 }
