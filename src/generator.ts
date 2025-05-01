@@ -161,6 +161,14 @@ async function getColumnsReferencesMaps(sql: postgres.Sql<{}>) {
 
 async function getTablesColumnsMap(sql: postgres.Sql<{}>, config: ParseConfig) {
   const exclueTables = config.excludeTables ?? [];
+  const rows = await sql<{ table_name: string }[]>`
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = 'public'
+    AND table_type = 'BASE TABLE'
+    AND table_name NOT IN (${exclueTables.join()});
+  `;
+  const tables = rows.map((x) => x.table_name);
   const tableColumnsMap = new Map<string, ColumnData[]>();
   const tableColumns = await sql<ColumnData[]>`
       SELECT
@@ -188,7 +196,7 @@ async function getTablesColumnsMap(sql: postgres.Sql<{}>, config: ParseConfig) {
         udt_name::TEXT
       FROM information_schema.columns
       WHERE table_schema = ${config.schemaName}
-      AND table_name NOT IN (${exclueTables.join()})
+      AND table_name::TEXT IN ${sql(tables)}
       and ordinal_position > 0
       order by table_name, ordinal_position
   `;
@@ -209,69 +217,8 @@ function findUniqueColumns(tableName: string, columns: ColumnData[]): string[] {
     }
   }
   if (primaryKeys.length === 0) {
-    throw new Error(`No primary column for table ${tableName}`);
+    console.warn(`No primary column for table ${tableName}`);
+    return columns.map((x) => x.column_name);
   }
   return primaryKeys;
-}
-
-function getGraphQLTypeFromColumn(
-  column: ColumnData,
-  forceNullable?: boolean
-): string {
-  const type = (() => {
-    switch (column.data_type) {
-      case "integer":
-        return "GraphQLInt";
-      case "text":
-        return "GraphQLString";
-      case "ARRAY":
-        return arrayPostgresType(column);
-      default:
-        throw new Error(
-          `Unhandled postgres column type: ${
-            column.data_type
-          }: ${JSON.stringify(column)}`
-        );
-    }
-  })();
-
-  return column.is_nullable || forceNullable === true
-    ? type
-    : `new GraphQLNonNull(${type})`;
-}
-
-function arrayPostgresType(column: ColumnData) {
-  switch (column.udt_name) {
-    case "_text":
-      return "new GraphQLList(new GraphQLNonNull(GraphQLString))";
-    default:
-      throw new Error(
-        `Unhandled array type: ${column.udt_name}, column: ${JSON.stringify(
-          column
-        )}`
-      );
-  }
-}
-
-function postgresArrayTypeToPostgresPrimitive(
-  type: string,
-  column: ColumnData
-): string {
-  switch (type) {
-    case "_text":
-      return "TEXT";
-    default:
-      throw new Error(
-        `Unhandled array type: ${type}, column: ${JSON.stringify(column)}`
-      );
-  }
-}
-
-function postgresTypeToTSType(type: string): string {
-  switch (type) {
-    case "TEXT":
-      return "string";
-    default:
-      throw new Error(`Unhandled postgres type to TS type: ${type}`);
-  }
 }

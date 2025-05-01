@@ -10,7 +10,7 @@ export function formatReferenceFields(
   for (const reference of references) {
     const fieldName = snakeToCamel(reference.foreign_table_name);
     const referenceColumn = columns.find(
-      (x) => x.column_name === reference.foreign_column_name
+      (x) => x.column_name === reference.column_name
     );
     if (referenceColumn === undefined) {
       throw new Error("The impossible happened");
