@@ -3,6 +3,8 @@ export const postgresToGraphql = {
   _float4: "GraphQLList(GraphQLFloat)",
   _float8: "GraphQLList(GraphQLFloat)",
   _int2: "GraphQLList(GraphQLInt)",
+  _int4: "GraphQLList(GraphQLInt)",
+  _int8: "GraphQLList(GraphQLInt)",
   _text: "GraphQLList(GraphQLString)",
   bool: "GraphQLBoolean",
   float4: "GraphQLFloat",
@@ -13,7 +15,12 @@ export const postgresToGraphql = {
   text: "GraphQLString",
   timestamp: "GraphQLDate",
   timestamptz: "GraphQLDate",
+  date: "GraphQLDate",
   varchar: "GraphQLString",
+  jsonb: "GraphQLJSONObject",
+  json: "GraphQLJSONObject",
+  uuid: "GraphQLString",
+  time: "GraphQLString",
 } as const;
 
 export const postgresToTS = {
@@ -21,6 +28,8 @@ export const postgresToTS = {
   _float4: "number[]",
   _float8: "number[]",
   _int2: "number[]",
+  _int4: "number[]",
+  _int8: "number[]",
   _text: "string[]",
   bool: "boolean",
   float4: "number",
@@ -31,5 +40,10 @@ export const postgresToTS = {
   text: "string",
   timestamp: "Date",
   timestamptz: "Date",
+  date: "Date",
   varchar: "string",
+  jsonb: "unknown",
+  json: "unknown",
+  uuid: "string",
+  time: "string",
 } as const;

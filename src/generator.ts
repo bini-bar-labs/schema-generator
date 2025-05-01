@@ -110,6 +110,7 @@ export async function generateSchemas(
         GraphQLFloat,
         GraphQLBoolean
       } from "graphql";
+      import { GraphQLJSONObject } from "graphql-type-json";
       const GraphQLDate = new GraphQLScalarType({
         name: "GraphQLDate",
       });
